@@ -6,18 +6,20 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     // Start is called before the first frame update
-    private InputHandler playerInputs;
+    [Header("Game Camera")]
+    [SerializeField] private Camera gameCamera;
+    private GameData gameDataInstance;
 
+
+    private InputHandler playerInputs;
     private bool onGround;
-    private float playerGravity;
-    private float playerVelocity;
+
 
     void Start()
     {
-        onGround = true;
-        playerGravity = 0.15f;
-        playerVelocity = 0.0f;
+        onGround = false;
         playerInputs = gameObject.GetComponent<InputHandler>();
+        gameDataInstance = gameCamera.GetComponent<GameData>();
     }
 
     // Update is called once per frame
@@ -25,16 +27,17 @@ public class PlayerControls : MonoBehaviour
     {
         if (playerInputs.JumpTriggered)
         {
-            onGround = false;
-            playerVelocity = 12.0f;
+            if(onGround)
+            {
+                onGround = false;
+                gameObject.GetComponent<Rigidbody2D>().velocityY = 7.5f;
+            }
         }
+    }
 
-        if (!onGround)
-        {
-            Vector3 NewPos = transform.position;
-            gameObject.GetComponent<Transform>().position = new Vector3(NewPos.x, NewPos.y + (Time.deltaTime * playerVelocity), NewPos.z);
-            playerVelocity -= playerGravity;
-            print(playerVelocity);
-        }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        onGround = true;
+        gameDataInstance.IncrementScore();
     }
 }
