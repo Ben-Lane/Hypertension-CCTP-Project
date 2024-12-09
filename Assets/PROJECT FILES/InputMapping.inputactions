@@ -1,1 +1,34 @@
-{}
+{
+    "name": "InputMapping",
+    "maps": [
+        {
+            "name": "DefaultInteractions",
+            "id": "d67e4a38-8ad7-4e23-be18-add28a084526",
+            "actions": [
+                {
+                    "name": "PlayerJump",
+                    "type": "Button",
+                    "id": "a5f53f1f-9c0a-4840-9319-7c3dec13be3b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6b424357-f1b5-43b5-b786-2dce61a24580",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlayerJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

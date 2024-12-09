@@ -22,12 +22,11 @@ public class CS_ButtonHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnButtonClicked()
     {
         progressScript.AddProgress();
     }
-
 }
