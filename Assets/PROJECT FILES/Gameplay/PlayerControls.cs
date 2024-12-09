@@ -30,14 +30,22 @@ public class PlayerControls : MonoBehaviour
             if(onGround)
             {
                 onGround = false;
-                gameObject.GetComponent<Rigidbody2D>().velocityY = 7.5f;
+                gameObject.GetComponent<Rigidbody2D>().velocityY = 12.5f;
+                gameDataInstance.playerInAir = true;
             }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Platform")
+        {
+            print("Hit Moving Platform");
+            gameDataInstance.IncrementScore();
+        }
+
         onGround = true;
-        gameDataInstance.IncrementScore();
+        gameDataInstance.playerInAir = false;
+        gameDataInstance.SpawnNextPlatform();
     }
 }
