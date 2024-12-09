@@ -13,6 +13,7 @@ public class PlayerControls : MonoBehaviour
 
     private InputHandler playerInputs;
     private bool onGround;
+    private bool Landed;
 
 
     void Start()
@@ -30,22 +31,28 @@ public class PlayerControls : MonoBehaviour
             if(onGround)
             {
                 onGround = false;
-                gameObject.GetComponent<Rigidbody2D>().velocityY = 12.5f;
+                gameObject.GetComponent<Rigidbody2D>().velocityY = 10.0f;
                 gameDataInstance.playerInAir = true;
             }
+        }
+
+        if(Landed)
+        {
+            Landed = gameDataInstance.moveCurrentPlatform();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        onGround = true;
+        Landed = true;
+        gameDataInstance.playerInAir = false;
+        gameDataInstance.SpawnNextPlatform();
+
         if (collision.gameObject.tag == "Platform")
         {
             print("Hit Moving Platform");
             gameDataInstance.IncrementScore();
         }
-
-        onGround = true;
-        gameDataInstance.playerInAir = false;
-        gameDataInstance.SpawnNextPlatform();
     }
 }

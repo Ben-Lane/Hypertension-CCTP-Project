@@ -39,9 +39,9 @@ public class GameData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerInAir && !nextPlatformHasCollider)
+        if (playerInAir && !nextPlatformHasCollider)
         {
-            if(nextPlatform.transform.position.y < playerCapsule.transform.position.y)
+            if (nextPlatform.transform.position.y < playerCapsule.transform.position.y)
             {
                 print("Player above next platform, spawn collision");
                 Destroy(currentPlatform);
@@ -62,8 +62,16 @@ public class GameData : MonoBehaviour
     public void SpawnNextPlatform()
     {
         print("SpawnPlatform");
+        if (nextPlatform != null) currentPlatform = nextPlatform;
         nextPlatform = Instantiate(movingPlatformPrefab);
     }
 
+    public bool moveCurrentPlatform()
+    {
+        Vector3 platPos = currentPlatform.transform.position;
+        currentPlatform.transform.position = new Vector3(platPos.x, platPos.y - (Time.deltaTime * 5), platPos.z);
+
+        return currentPlatform.transform.position.y > -3;
+    }
 
 }
