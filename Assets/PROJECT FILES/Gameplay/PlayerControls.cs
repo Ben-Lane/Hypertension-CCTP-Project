@@ -6,10 +6,8 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     // Start is called before the first frame update
-    [Header("Game Camera")]
-    [SerializeField] private Camera gameCamera;
+    private GameObject gameDataObject;
     private GameData gameDataInstance;
-
 
     private InputHandler playerInputs;
     private bool onGround;
@@ -19,8 +17,11 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         onGround = false;
+        Landed = true;
         playerInputs = gameObject.GetComponent<InputHandler>();
-        gameDataInstance = gameCamera.GetComponent<GameData>();
+
+        gameDataObject = GameObject.Find("GameplayData");
+        gameDataInstance = gameDataObject.GetComponent<GameData>();
     }
 
     // Update is called once per frame
@@ -31,14 +32,16 @@ public class PlayerControls : MonoBehaviour
             if(onGround)
             {
                 onGround = false;
+                Landed = false;
                 gameObject.GetComponent<Rigidbody2D>().velocityY = 10.0f;
                 gameDataInstance.playerInAir = true;
+                gameDataInstance.DestroyPlatform();
             }
         }
 
-        if(Landed)
+        if(!Landed)
         {
-            Landed = gameDataInstance.moveCurrentPlatform();
+            gameDataInstance.TrackCamera(gameObject.GetComponent<Transform>().position);
         }
     }
 

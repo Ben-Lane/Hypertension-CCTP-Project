@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class GameData : MonoBehaviour
@@ -14,15 +15,24 @@ public class GameData : MonoBehaviour
     [Header("Moving Platform Prefab")]
     [SerializeField] private GameObject movingPlatformPrefab;
 
+    [Header("Current Platform")]
+    [SerializeField] private GameObject currentPlatform;
+
     [Header("Player Character")]
     [SerializeField] private GameObject playerCapsule;
 
+    [Header("Game Camera")]
+    [SerializeField] private GameObject gameCamera;
+
     //Existing Platforms
     private GameObject nextPlatform;
-    [SerializeField] private GameObject currentPlatform;
+    private GameObject oldPlatform;
 
     //GameVariables
     private bool nextPlatformHasCollider;
+    private float cameraPlatformBuffer;
+    private float cameraPlayerBuffer;
+    private float gainedHeight;
 
     public bool playerInAir { get; set; }
 
@@ -34,20 +44,17 @@ public class GameData : MonoBehaviour
         }
 
         nextPlatformHasCollider = false;
+        cameraPlatformBuffer = Mathf.Abs(currentPlatform.transform.position.y - movingPlatformPrefab.transform.position.y);
+        cameraPlayerBuffer = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerInAir && !nextPlatformHasCollider)
+        if ((playerCapsule.transform.position.y - playerCapsule.GetComponent<SpriteRenderer>().bounds.size.y / 2) >
+            (nextPlatform.transform.position.y + nextPlatform.GetComponent<SpriteRenderer>().bounds.size.y / 2))
         {
-            if (nextPlatform.transform.position.y < playerCapsule.transform.position.y)
-            {
-                print("Player above next platform, spawn collision");
-                Destroy(currentPlatform);
-                nextPlatform.AddComponent<BoxCollider2D>();
-                nextPlatformHasCollider = true;
-            }
+            nextPlatform.GetComponent<BoxCollider2D>().enabled = true;
         }
     }
 
@@ -62,16 +69,35 @@ public class GameData : MonoBehaviour
     public void SpawnNextPlatform()
     {
         print("SpawnPlatform");
+
+        // State which platform is stood on
         if (nextPlatform != null) currentPlatform = nextPlatform;
+        print("Current Platform = " + currentPlatform.name);
+
+        //Create The next Platform
         nextPlatform = Instantiate(movingPlatformPrefab);
+        nextPlatform.name = "platform " + player_score.text.ToString();
+        print("Next Platform = " + nextPlatform.name);
+
+        //Set Platform for deletion next time the player jumps
+        oldPlatform = currentPlatform;
+        print("Old Platform = " + oldPlatform.name);
+
+        nextPlatform.transform.position = new Vector3(nextPlatform.transform.position.x, nextPlatform.transform.position.y + gainedHeight, nextPlatform.transform.position.z);
+        
+        gainedHeight += cameraPlatformBuffer;
+        print(gainedHeight);
+
     }
 
-    public bool moveCurrentPlatform()
+    public void TrackCamera(Vector3 trackPos)
     {
-        Vector3 platPos = currentPlatform.transform.position;
-        currentPlatform.transform.position = new Vector3(platPos.x, platPos.y - (Time.deltaTime * 5), platPos.z);
-
-        return currentPlatform.transform.position.y > -3;
+        if(cameraPlayerBuffer <= 0) cameraPlayerBuffer = Mathf.Abs(gameCamera.transform.position.y - playerCapsule.transform.position.y);
+        gameCamera.transform.position = new Vector3(trackPos.x, trackPos.y + cameraPlayerBuffer, gameCamera.transform.position.z);
     }
 
+    public void DestroyPlatform()
+    {
+        Destroy(oldPlatform);
+    }
 }
