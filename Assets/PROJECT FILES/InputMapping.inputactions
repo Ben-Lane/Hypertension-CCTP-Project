@@ -26,6 +26,17 @@
                     "action": "PlayerJump",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43cace5e-0bd1-4a2b-8f85-391719f06ca3",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlayerJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
