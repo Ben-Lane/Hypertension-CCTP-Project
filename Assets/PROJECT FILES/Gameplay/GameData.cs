@@ -24,6 +24,9 @@ public class GameData : MonoBehaviour
     [Header("Game Camera")]
     [SerializeField] private GameObject gameCamera;
 
+    [Header("Death Barrier")]
+    [SerializeField] private GameObject deathBarrier;
+
     //Existing Platforms
     private GameObject nextPlatform;
     private GameObject oldPlatform;
@@ -32,9 +35,14 @@ public class GameData : MonoBehaviour
     private bool nextPlatformHasCollider;
     private float cameraPlatformBuffer;
     private float cameraPlayerBuffer;
+    private float playerBarrierBuffer;
     private float gainedHeight;
 
+    public bool gameOver { get; private set; }
+
+    //Variables
     public bool playerInAir { get; set; }
+    public float platform_width { get; private set; }
 
     void Start()
     {
@@ -46,23 +54,37 @@ public class GameData : MonoBehaviour
         nextPlatformHasCollider = false;
         cameraPlatformBuffer = Mathf.Abs(currentPlatform.transform.position.y - movingPlatformPrefab.transform.position.y);
         cameraPlayerBuffer = 0f;
+
+        platform_width = currentPlatform.GetComponent<SpriteRenderer>().bounds.size.x;
+
+        //setup game
+        gameOver = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((playerCapsule.transform.position.y - playerCapsule.GetComponent<SpriteRenderer>().bounds.size.y / 2) >
-            (nextPlatform.transform.position.y + nextPlatform.GetComponent<SpriteRenderer>().bounds.size.y / 2))
+        if (nextPlatform != null)
         {
-            nextPlatform.GetComponent<BoxCollider2D>().enabled = true;
+            if ((playerCapsule.transform.position.y - playerCapsule.GetComponent<SpriteRenderer>().bounds.size.y / 2) >
+            (nextPlatform.transform.position.y + nextPlatform.GetComponent<SpriteRenderer>().bounds.size.y / 2))
+            {
+                nextPlatform.GetComponent<BoxCollider2D>().enabled = true;
+            }
         }
     }
 
     public void IncrementScore()
     {
-        if(int.TryParse(player_score.text, out int current_score))
+        float playerBottom = playerCapsule.transform.position.y - (playerCapsule.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        float platformTop = currentPlatform.transform.position.y + (currentPlatform.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+
+        if (playerBottom > platformTop)
         {
-            player_score.text = (current_score + 1).ToString();
+            if (int.TryParse(player_score.text, out int current_score))
+            {
+                player_score.text = (current_score + 1).ToString();
+            }
         }
     }
 
@@ -71,33 +93,63 @@ public class GameData : MonoBehaviour
         print("SpawnPlatform");
 
         // State which platform is stood on
-        if (nextPlatform != null) currentPlatform = nextPlatform;
-        print("Current Platform = " + currentPlatform.name);
+        if (nextPlatform != null)
+        {
+            currentPlatform = nextPlatform;
+
+            //disable movement on current platform
+            currentPlatform.GetComponent<PlatformMovement>().Moving = false;
+        }
 
         //Create The next Platform
         nextPlatform = Instantiate(movingPlatformPrefab);
         nextPlatform.name = "platform " + player_score.text.ToString();
-        print("Next Platform = " + nextPlatform.name);
 
         //Set Platform for deletion next time the player jumps
         oldPlatform = currentPlatform;
-        print("Old Platform = " + oldPlatform.name);
 
         nextPlatform.transform.position = new Vector3(nextPlatform.transform.position.x, nextPlatform.transform.position.y + gainedHeight, nextPlatform.transform.position.z);
-        
+
         gainedHeight += cameraPlatformBuffer;
         print(gainedHeight);
-
     }
 
     public void TrackCamera(Vector3 trackPos)
     {
-        if(cameraPlayerBuffer <= 0) cameraPlayerBuffer = Mathf.Abs(gameCamera.transform.position.y - playerCapsule.transform.position.y);
+        //Adjust camera -> player positions while moving
+        if (cameraPlayerBuffer <= 0) cameraPlayerBuffer = Mathf.Abs(gameCamera.transform.position.y - playerCapsule.transform.position.y);
         gameCamera.transform.position = new Vector3(trackPos.x, trackPos.y + cameraPlayerBuffer, gameCamera.transform.position.z);
+
+        //find death barrier -> player distance
+        if (deathBarrier.transform.position.y <= nextPlatform.transform.position.y)
+        {
+            if (playerBarrierBuffer <= 0) playerBarrierBuffer = Mathf.Abs(playerCapsule.transform.position.y - deathBarrier.transform.position.y); ;
+            deathBarrier.transform.position = new Vector3(trackPos.x, trackPos.y - playerBarrierBuffer, deathBarrier.transform.position.z);
+        }
     }
 
     public void DestroyPlatform()
     {
         Destroy(oldPlatform);
+    }
+    public void EndGame(GameObject prefab)
+    {
+        // End the game code
+        print("Game Ended");
+        gameOver = true;
+
+        //Setup height values, to account for climbed height by player
+        GameObject endUI = Instantiate(prefab);
+
+        endUI.GetComponent<GameOverUIMovement>().endHeight = gameCamera.transform.position.y;
+        endUI.GetComponent<GameOverUIMovement>().startHeight = gameCamera.transform.position.y - (gameCamera.GetComponent<Camera>().orthographicSize) - (endUI.GetComponent<SpriteRenderer>().bounds.size.y / 2);
+        endUI.transform.position = new Vector3(gameCamera.transform.position.x, endUI.GetComponent<GameOverUIMovement>().startHeight, endUI.transform.position.z);
+
+        // Stop camera lockiing to the player
+        playerCapsule.GetComponent<PlayerControls>().Landed = true;
+
+        //start end game UI movement
+        endUI.GetComponent<GameOverUIMovement>().StartMovement();
+
     }
 }

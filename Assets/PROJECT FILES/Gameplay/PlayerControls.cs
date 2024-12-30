@@ -11,7 +11,7 @@ public class PlayerControls : MonoBehaviour
 
     private InputHandler playerInputs;
     private bool onGround;
-    private bool Landed;
+    public bool Landed;
 
 
     void Start()
@@ -27,7 +27,7 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInputs.JumpTriggered)
+        if (playerInputs.JumpTriggered && !gameDataInstance.gameOver)
         {
             if(onGround)
             {
