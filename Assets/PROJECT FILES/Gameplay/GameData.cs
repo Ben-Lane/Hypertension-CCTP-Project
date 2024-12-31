@@ -132,6 +132,7 @@ public class GameData : MonoBehaviour
     {
         Destroy(oldPlatform);
     }
+
     public void EndGame(GameObject prefab)
     {
         // End the game code
@@ -151,5 +152,10 @@ public class GameData : MonoBehaviour
         //start end game UI movement
         endUI.GetComponent<GameOverUIMovement>().StartMovement();
 
+    }
+
+    public float getCameraHeight()
+    {
+        return gameCamera.transform.position.y;
     }
 }

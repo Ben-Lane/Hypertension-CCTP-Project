@@ -12,10 +12,10 @@ public class CS_ProgressBarCalc : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //initialise variables
-        increment = 20;
-        progress = increment;
-        max_progress = increment * 20;
+        //initialise variables 400 = bar width (20 x 20)
+        increment = 20; //bar height / bar additions to width
+        progress = increment * 19; //how much is added to width per click
+        max_progress = increment * 20; //width of full bar
 
         //initialise progress bar
         UpdateUI();
