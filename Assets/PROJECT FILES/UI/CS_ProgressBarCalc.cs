@@ -9,6 +9,10 @@ public class CS_ProgressBarCalc : MonoBehaviour
     private float increment;
     private float max_progress;
 
+    // Scene Management variables
+    private GameObject SceneManagerObject;
+    private SceneManagement SceneManagerScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +20,10 @@ public class CS_ProgressBarCalc : MonoBehaviour
         increment = 20; //bar height / bar additions to width
         progress = increment * 19; //how much is added to width per click
         max_progress = increment * 20; //width of full bar
+
+        // Scene Manager Setup
+        SceneManagerObject = GameObject.Find("SceneManager");
+        SceneManagerScript = SceneManagerObject.GetComponent<SceneManagement>();
 
         //initialise progress bar
         UpdateUI();
@@ -37,7 +45,7 @@ public class CS_ProgressBarCalc : MonoBehaviour
         {
             //Activate Next Scene
             print("Next Scene");
-            SceneManager.LoadScene("PlayScene");
+            SceneManagerScript.ChangeToScene(SceneEnum.PlayScene);
         }
     }
 

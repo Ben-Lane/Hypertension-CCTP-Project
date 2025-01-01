@@ -6,11 +6,18 @@ using UnityEngine.UI;
 
 public class ReplayScript : MonoBehaviour
 {
+    private GameObject SceneManagerObject;
+    private SceneManagement SceneManagerScript;
+
     // Start is called before the first frame update
     void Start()
     {
         Button MainButton = GetComponent<Button>();
         MainButton.onClick.AddListener(OnButtonClicked);
+
+        // Setup Scene Manager Access
+        SceneManagerObject = GameObject.Find("SceneManager");
+        SceneManagerScript = SceneManagerObject.GetComponent<SceneManagement>();
     }
 
     // Update is called once per frame
@@ -21,6 +28,6 @@ public class ReplayScript : MonoBehaviour
 
     void OnButtonClicked()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManagerScript.ChangeToScene(SceneEnum.PlayScene);
     }
 }
