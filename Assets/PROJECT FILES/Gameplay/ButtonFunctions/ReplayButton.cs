@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ReplayScript : MonoBehaviour
+public class ReplayButton : MonoBehaviour
 {
     private GameObject SceneManagerObject;
     private SceneManagement SceneManagerScript;
+
+    // Money Script Vairable
+    private MoneyHandler moneyScript;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,9 @@ public class ReplayScript : MonoBehaviour
         // Setup Scene Manager Access
         SceneManagerObject = GameObject.Find("SceneManager");
         SceneManagerScript = SceneManagerObject.GetComponent<SceneManagement>();
+
+        // access money handler
+        moneyScript = gameObject.GetComponent<MoneyHandler>();
     }
 
     // Update is called once per frame
@@ -28,6 +34,10 @@ public class ReplayScript : MonoBehaviour
 
     void OnButtonClicked()
     {
-        SceneManagerScript.ChangeToScene(SceneEnum.PlayScene);
+        if (moneyScript.CheckBalance() > 0)
+        {
+            SceneManagerScript.ChangeToScene(SceneEnum.PlayScene);
+            moneyScript.SpendMoney(1);
+        }
     }
 }

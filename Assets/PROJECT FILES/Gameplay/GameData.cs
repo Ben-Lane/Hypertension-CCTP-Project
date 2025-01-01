@@ -88,6 +88,18 @@ public class GameData : MonoBehaviour
         }
     }
 
+    public int AccessScore()
+    {
+        if(int.TryParse(player_score.text, out int current_score))
+        {
+            return current_score;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     public void SpawnNextPlatform()
     {
         print("SpawnPlatform");
