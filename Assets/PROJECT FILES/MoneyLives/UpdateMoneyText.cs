@@ -6,35 +6,26 @@ using UnityEngine.UI;
 
 public class UpdateMoneyText : MonoBehaviour
 {
-    // Money Script Vairable
-    private MoneyHandler moneyScript;
-
+    [SerializeField]    
     private int currentBalance;
 
     // Start is called before the first frame update
     void Start()
     {
-        // access money handler
-        moneyScript = gameObject.GetComponent<MoneyHandler>();
-
         // setup intial balance
-        currentBalance = moneyScript.CheckBalance();
+        currentBalance = MoneyManager.instance.CheckBalance();
+        UpdateText();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // If money has changed value
-        if(currentBalance != moneyScript.CheckBalance())
-        {
-            // update the text to match
-            UpdateText();
-            currentBalance = moneyScript.CheckBalance();
-        }
+        currentBalance = MoneyManager.instance.CheckBalance();
+        UpdateText();
     }
 
     void UpdateText()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = "£" + moneyScript.CheckBalance().ToString();
+        gameObject.GetComponent<TextMeshProUGUI>().text = "£" + currentBalance.ToString();
     }
 }

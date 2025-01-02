@@ -9,9 +9,6 @@ public class CS_ProgressBarCalc : MonoBehaviour
     private float increment;
     private float max_progress;
 
-    // Money Script Vairable
-    private MoneyHandler moneyScript;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +16,6 @@ public class CS_ProgressBarCalc : MonoBehaviour
         increment = 20; //bar height / bar additions to width
         progress = increment; //how much is added to width per click
         max_progress = increment * 20; //width of full bar
-
-        // access money handler
-        moneyScript = gameObject.GetComponent<MoneyHandler>();
 
         //initialise progress bar
         UpdateUI();
@@ -42,7 +36,7 @@ public class CS_ProgressBarCalc : MonoBehaviour
         if (progress >= max_progress)
         {
             //Activate Next Scene
-            moneyScript.TopUpMoney(1);
+            MoneyManager.instance.TopUpMoney(1);
             ResetProgress();
             UpdateUI();
         }

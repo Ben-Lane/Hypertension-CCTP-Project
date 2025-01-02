@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1730499936780115568}
   - component: {fileID: 8475814620158504615}
   - component: {fileID: 530353807860142527}
-  - component: {fileID: 482114231793631025}
   - component: {fileID: 111765141401969194}
   m_Layer: 5
   m_Name: MoneyText
@@ -138,18 +137,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &482114231793631025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4874353094766413107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70f2f464c90a722419772fc460141086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &111765141401969194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,3 +149,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f753721cc51b7479368fad828539e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentBalance: 0
