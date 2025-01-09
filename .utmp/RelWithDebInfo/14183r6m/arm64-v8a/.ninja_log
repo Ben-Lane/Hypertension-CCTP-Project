@@ -1,0 +1,11 @@
+# ninja log v5
+26	109	7579725371574939	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	5d3d3b0dce7ff222
+110	270	7579725372715194	F:/YEAR 3 UNI/Y3 UNI DISSERTATION/Hypertension-CCTP-Project/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/14183r6m/obj/arm64-v8a/libswappywrapper.so	330fb74acba168f2
+1	444	7579725374900729	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	978297dc0a806b48
+14	446	7579725374920883	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	ddf0873e43335112
+18	467	7579725375138828	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	cbf1d332493e30b8
+21	517	7579725375642921	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	a286babecc9a9953
+7	564	7579725376102413	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	203d16d17d77b0
+10	655	7579725377000207	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	709f7f7d655a5ba3
+4	697	7579725377416489	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	9a9bf29f3743d9f7
+697	796	7579725378077032	F:/YEAR 3 UNI/Y3 UNI DISSERTATION/Hypertension-CCTP-Project/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/14183r6m/obj/arm64-v8a/libgame.so	cc98b36b835d8f27

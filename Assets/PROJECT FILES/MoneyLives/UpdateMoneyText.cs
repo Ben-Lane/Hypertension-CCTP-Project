@@ -26,6 +26,6 @@ public class UpdateMoneyText : MonoBehaviour
 
     void UpdateText()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = "£" + currentBalance.ToString();
+        gameObject.GetComponent<TextMeshProUGUI>().text = currentBalance.ToString() + "x";
     }
 }
