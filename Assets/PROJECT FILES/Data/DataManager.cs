@@ -36,6 +36,9 @@ public class DataManager : MonoBehaviour
         if (profile == null)
         {
             profile = new UserProfileData();
+
+            //Delete loading Screen
+                        
         }
         else
         {
@@ -46,16 +49,18 @@ public class DataManager : MonoBehaviour
         //Once all is loaded, delete loading screen
     }
 
-    void SaveData()
+    public void SaveData()
     {
         //Save Every Type of Data
         SaveSystem.SaveProfileData(profile);
     }
 
-    void ClearData()
+    public void ClearData()
     {
         SaveSystem.ClearProfileData();
-        profile = SaveSystem.LoadProfileData();
+        UnityEditor.AssetDatabase.Refresh();
+        profile = new UserProfileData();
+        sceneHandler.EnterProfileSelectScene();
     }
 
     public void OnApplicationQuit()

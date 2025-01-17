@@ -6,16 +6,14 @@ using UnityEngine;
 using UnityEngine.Profiling;
 
 public static class SaveSystem
-{
-    
-    
+{    
     public static void SaveProfileData(UserProfileData profile)
     {
         //Create formatter
         BinaryFormatter formatter = new BinaryFormatter();
 
         //Create path and open file stream
-        string path = Application.persistentDataPath + "/profile.save";
+        string path = Application.persistentDataPath + "/saves/profile.save";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         //Convert class to binary and save
@@ -26,7 +24,7 @@ public static class SaveSystem
     public static UserProfileData LoadProfileData()
     {
         //If file exists at this path
-        string path = Application.persistentDataPath + "/profile.save";
+        string path = Application.persistentDataPath + "/saves/profile.save";
         if(File.Exists(path))
         {
             //Create Binary Formatter
@@ -35,7 +33,6 @@ public static class SaveSystem
             //Open the file from the file stream
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            
             //Deserialize the file and cast to the designated type ("as UserProfileData" does the casting)
             UserProfileData profile = formatter.Deserialize(stream) as UserProfileData;
             stream.Close();
@@ -51,8 +48,7 @@ public static class SaveSystem
 
     public static void ClearProfileData()
     {
-        UserProfileData blankProfile = null;
-
-        SaveProfileData(blankProfile);
+        string path = Application.persistentDataPath + "/saves/profile.save";
+        File.Delete(path);
     }
 }
