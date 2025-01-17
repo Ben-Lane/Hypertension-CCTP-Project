@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public static class SaveSystem
 {
     
-    public static void SaveData(UserProfileData profile)
+    
+    public static void SaveProfileData(UserProfileData profile)
     {
         //Create formatter
         BinaryFormatter formatter = new BinaryFormatter();
 
-        //Create path an open file stream
+        //Create path and open file stream
         string path = Application.persistentDataPath + "/profile.save";
         FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -21,7 +23,7 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static UserProfileData LoadData()
+    public static UserProfileData LoadProfileData()
     {
         //If file exists at this path
         string path = Application.persistentDataPath + "/profile.save";
@@ -33,6 +35,7 @@ public static class SaveSystem
             //Open the file from the file stream
             FileStream stream = new FileStream(path, FileMode.Open);
 
+            
             //Deserialize the file and cast to the designated type ("as UserProfileData" does the casting)
             UserProfileData profile = formatter.Deserialize(stream) as UserProfileData;
             stream.Close();
@@ -44,5 +47,12 @@ public static class SaveSystem
             Debug.LogError("Save file not found at " + path);
             return null;
         }
+    }
+
+    public static void ClearProfileData()
+    {
+        UserProfileData blankProfile = null;
+
+        SaveProfileData(blankProfile);
     }
 }
