@@ -13,7 +13,7 @@ public static class SaveSystem
         BinaryFormatter formatter = new BinaryFormatter();
 
         //Create path and open file stream
-        string path = Application.persistentDataPath + "/saves/profile.save";
+        string path = Application.persistentDataPath + "/profile.save";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         //Convert class to binary and save
@@ -24,7 +24,7 @@ public static class SaveSystem
     public static UserProfileData LoadProfileData()
     {
         //If file exists at this path
-        string path = Application.persistentDataPath + "/saves/profile.save";
+        string path = Application.persistentDataPath + "/profile.save";
         if(File.Exists(path))
         {
             //Create Binary Formatter
@@ -48,7 +48,7 @@ public static class SaveSystem
 
     public static void ClearProfileData()
     {
-        string path = Application.persistentDataPath + "/saves/profile.save";
+        string path = Application.persistentDataPath + "/profile.save";
         File.Delete(path);
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler
 {
-    private string[] SceneNames = { "ProfileSelect", "StartingScene", "PlayScene" };
-    private enum SceneID { ProfileSelect, StartingScene, PlayScene};
+    public string[] SceneNames = { "ProfileSelect", "StartingScene", "PlayScene" };
+    public enum SceneID { ProfileSelect, StartingScene, PlayScene};
 
 
     public void EnterProfileSelectScene()
