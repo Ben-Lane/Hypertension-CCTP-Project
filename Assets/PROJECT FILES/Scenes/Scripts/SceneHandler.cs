@@ -9,6 +9,9 @@ public class SceneHandler
     public string[] SceneNames = { "ProfileSelect", "StartingScene", "PlayScene" };
     public enum SceneID { ProfileSelect, StartingScene, PlayScene};
 
+    private GameObject enterTransition;
+    private GameObject exitTransition;
+
 
     public void EnterProfileSelectScene()
     {
@@ -24,4 +27,6 @@ public class SceneHandler
     {
         SceneManager.LoadScene(SceneNames[(int)SceneID.PlayScene]);
     }
+
+
 }

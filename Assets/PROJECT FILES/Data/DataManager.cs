@@ -58,22 +58,11 @@ public class DataManager : MonoBehaviour
 
     public void ClearData()
     {
-        print("Old Profile");
-        print(profile.age);
-        print(profile.height);
-        print(profile.weight);
-        print(profile.daily_steps[0]);
 
         SaveSystem.ClearProfileData();
         UnityEditor.AssetDatabase.Refresh();
         profile = new UserProfileData();
         sceneHandler.EnterProfileSelectScene();
-
-        print("Reset Profile");
-        print(profile.age);
-        print(profile.height);
-        print(profile.weight);
-        print(profile.daily_steps[0]);
     }
 
     public void OnApplicationQuit()
@@ -92,12 +81,6 @@ public class DataManager : MonoBehaviour
         profile = data;
         SaveData();
         sceneHandler.EnterStartingScene();
-
-        print("New Profile");
-        print(profile.age);
-        print(profile.height);
-        print(profile.weight);
-        print(profile.daily_steps[0]);
     }
 
     private void printProfileData()
