@@ -30,6 +30,7 @@ public class PlayerProfiles
                 selectedProfile.weight = 85;
                 selectedProfile.daily_steps = new float[14] {4000f, 4000f, 2000f, 4000f, 4000f, 4000f, 4000f,
                                                             4000f, 4000f, 2000f, 4000f, 4000f, 4000f, 4000f };
+                selectedProfile.step_target = 20;
                 break;
 
             //Generate a female adult player profile
@@ -40,6 +41,7 @@ public class PlayerProfiles
                 selectedProfile.weight = 77;
                 selectedProfile.daily_steps = new float[14] {3000f, 3000f, 3000f, 3000f, 3000f, 3000f, 3000f,
                                                             3000f, 3000f, 3000f, 3000f, 3000f, 3000f, 3000f };
+                selectedProfile.step_target = 20;
                 break;
 
             //Generate a male child player profile
@@ -50,6 +52,7 @@ public class PlayerProfiles
                 selectedProfile.weight = 35;
                 selectedProfile.daily_steps = new float[14] {2000f, 2000f, 2000f, 2000f, 2000f, 2000f, 2000f,
                                                             2000f, 2000f, 2000f, 2000f, 2000f, 2000f, 2000f };
+                selectedProfile.step_target = 10;
                 break;
 
             //Generate a female child player profile
@@ -60,6 +63,7 @@ public class PlayerProfiles
                 selectedProfile.weight = 38;
                 selectedProfile.daily_steps = new float[14] {1000f, 1000f, 1000f, 1000f, 1000f, 1000f, 1000f,
                                                             1000f, 1000f, 1000f, 1000f, 1000f, 1000f, 1000f };
+                selectedProfile.step_target = 10;
                 break;
 
         }

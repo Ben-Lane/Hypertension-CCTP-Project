@@ -91,4 +91,8 @@ public class DataManager : MonoBehaviour
         print(profile.weight);
         print(profile.daily_steps[0]);
     }
+    public float getProfileSteps()
+    {
+        return profile.step_target;
+    }
 }
